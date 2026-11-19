@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Računalnik in kodiranje – učna stran</title>
+<style>
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+:root{color-scheme:dark;--bg:#1c1f24;--card:#272b32;--card2:#323741;--soft:#2e333c;--ink:#eceef2;--mut:#a7adb8;--acc:#6b9bff;--acc2:#2c3a58;--ok:#4fd18f;--okb:#1d3a2c;--bad:#ff7b70;--badb:#47262a;--line:#414754;--r:18px}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.55}
+header{padding:28px 18px 10px;max-width:860px;margin:auto}
+h1{font-size:28px;margin:0 0 6px}
+.sub{color:var(--mut);margin:0}
+nav{position:sticky;top:0;z-index:5;background:rgba(28,31,36,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav .in{max-width:860px;margin:auto;display:flex;gap:8px;padding:10px 14px;overflow-x:auto;scrollbar-width:none}
+nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--card2);border:1px solid var(--line);padding:7px 14px;border-radius:999px;font-size:14px;white-space:nowrap}
+nav a:hover{background:var(--acc2)}
+main{max-width:860px;margin:auto;padding:10px 14px 60px}
+section{background:var(--card);border-radius:var(--r);padding:22px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+h2{margin:0 0 12px;font-size:22px}
+h3{margin:16px 0 6px;font-size:18px}
+.task{background:var(--acc2);border-radius:14px;padding:12px 16px;margin:0 0 14px}
+.task>b{display:block;margin-bottom:4px}
+.task ol{margin:0;padding-left:20px}
+.btn{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--card2);padding:8px 16px;border-radius:999px;cursor:pointer;color:var(--ink)}
+.btn:hover{background:var(--acc2)}
+.btn.on,.btn.main{background:var(--acc);border-color:var(--acc);color:#10131a;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input[type=text],input[type=number]{background:var(--card2);color:var(--ink);font:inherit;padding:9px 14px;border:1px solid var(--line);border-radius:999px;min-width:0;width:100%;max-width:340px}
+.box{border-radius:14px;padding:12px 16px;margin:10px 0;background:var(--soft);border:1px solid var(--line)}
+.ok{background:var(--okb);border-color:#2f6b4c}
+.bad{background:var(--badb);border-color:#7a3a3f}
+.weak{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.weak div{border-radius:14px;padding:12px 14px;background:var(--soft);border:1px solid var(--line)}
+.weak .w{border-left:6px solid var(--bad)}
+.weak .s{border-left:6px solid var(--ok)}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:15px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+td,th{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left}
+th{background:var(--card2)}
+tr:last-child td{border-bottom:0}
+/* PC model */
+.pcwrap{position:relative;border-radius:16px;overflow:hidden;background:#15181e;aspect-ratio:4/3}
+#pc{width:100%;height:100%;display:block}
+#pc .part{cursor:pointer;transition:opacity .3s,filter .3s}
+#pc .part:hover{filter:brightness(1.25)}
+#pc.focus .part{opacity:.25}
+#pc.focus .part.sel{opacity:1}
+.bubble{position:absolute;right:3%;top:50%;transform:translateY(-50%);width:47%;max-height:92%;overflow:auto;background:var(--card2);border-radius:16px;padding:14px 16px;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:pop .35s ease}
+.bubble h4{margin:0 30px 6px 0;font-size:17px;line-height:1.25}
+.bubble p{margin:0 0 6px}
+.bubble .x{position:absolute;top:8px;right:8px;width:30px;height:30px;padding:0;border-radius:999px}
+@keyframes pop{from{opacity:0;transform:translateY(-50%) scale(.9)}to{opacity:1;transform:translateY(-50%) scale(1)}}
+#pc text{font-size:13px;fill:#fff;pointer-events:none;font-weight:600}
+.info{margin-top:12px;border-radius:14px;padding:14px 16px;background:var(--soft);border:1px solid var(--line);min-height:90px}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;background:var(--acc2);color:var(--acc);margin:4px 4px 0 0}
+.iogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ioc{perspective:600px;height:96px;cursor:pointer;border:0;background:none;padding:0;font:inherit}
+.ioc .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.ioc.flip .in{transform:rotateY(180deg)}
+.ioc .f,.ioc .b{position:absolute;inset:0;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;border:1px solid var(--line);background:var(--card2);text-align:center;padding:4px;font-size:14px}
+.ioc .f span{font-size:30px}
+.ioc .b{transform:rotateY(180deg);font-weight:700}
+.tin{background:#1d3a2c!important;color:#6fe0a6!important}.tout{background:#4a3220!important;color:#ffb36b!important}.tboth{background:#3a2d55!important;color:#c6a6ff!important}.tmem{background:var(--acc2)!important;color:var(--acc)!important}
+.legend{margin:10px 0 0;font-size:14px;color:var(--mut)}
+.ex{background:#3a3322;border-color:#6b5a30}
+.ex ol{margin:6px 0;padding-left:20px}
+.sortcard{border-radius:18px;border:1px solid var(--line);background:var(--soft);padding:18px;text-align:center}
+.sortcard .dev{font-size:44px;line-height:1}
+.sortcard .nm{font-size:20px;font-weight:700;margin:6px 0 12px}
+.sortcard .row{justify-content:center}
+.sortcard .fb{margin-top:12px;text-align:left}
+/* hex task */
+.hxt{overflow-x:auto}
+.hxt table{width:auto;min-width:100%}
+.hxt td{text-align:center}
+.hxt input{width:48px;text-align:center;font:700 18px ui-monospace,monospace;padding:6px;border:2px solid var(--line);border-radius:12px;text-transform:uppercase;background:var(--card2);color:var(--ink)}
+.hxt input.r,.tin8.r{border-color:var(--ok);background:var(--okb)}.hxt input.w,.tin8.w{border-color:var(--bad);background:var(--badb)}
+.hxt .pv{font-size:11px;color:var(--mut);display:block}
+/* von neumann */
+.vn{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:10px;align-items:center;text-align:center}
+.vn div{border-radius:14px;padding:14px 8px;border:2px solid var(--line);cursor:pointer;background:var(--card2)}
+.vn div.on{border-color:var(--acc);background:var(--acc2)}
+.vn .mem{grid-column:1/4}
+/* building */
+.bld{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.house{display:flex;flex-direction:column-reverse;gap:3px;width:150px}
+.fl{height:26px;border-radius:8px;background:#34405a;font-size:12px;display:flex;align-items:center;justify-content:center;position:relative}
+.fl.me{background:#ffd76a;color:#1c1f24;font-weight:700}
+.big{font-size:22px;font-weight:700}
+.rgbw{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.sw{width:120px;height:120px;border-radius:18px;border:2px solid var(--line)}
+.sl{display:flex;gap:10px;align-items:center;font-weight:700}
+.sl input{flex:1;accent-color:var(--acc)}
+.sl span{width:34px;text-align:right;font-family:ui-monospace,monospace}
+.dot{display:inline-block;width:14px;height:14px;border-radius:999px;margin-right:6px;vertical-align:-2px;border:1px solid var(--line)}
+/* bits */
+.bits{display:flex;gap:6px;flex-wrap:wrap}
+.bit{width:44px;height:44px;border-radius:12px;border:2px solid var(--line);font:700 18px ui-monospace,monospace;cursor:pointer;background:var(--card2)}
+.bit.one{background:var(--acc);color:#10131a;border-color:var(--acc)}
+.w8{font-size:12px;color:var(--mut);text-align:center;width:44px}
+.nib{display:inline-block;border-radius:12px;padding:6px 10px;margin:4px;background:var(--soft);border:1px solid var(--line);text-align:center}
+.nib b{display:block;font-size:20px;color:var(--acc)}
+.chk label{display:flex;gap:8px;align-items:center;padding:6px 12px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:var(--card2)}
+.chk{display:flex;flex-wrap:wrap;gap:8px}
+.ladder{display:flex;flex-direction:column;gap:6px}
+.ladder button{text-align:left}
+/* quiz */
+.opt{display:block;width:100%;text-align:left;margin:6px 0;border-radius:14px;padding:10px 14px}
+.opt.right{background:var(--okb);border-color:var(--ok)}
+.opt.wrong{background:var(--badb);border-color:var(--bad)}
+.prog{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin:8px 0 14px}
+.prog i{display:block;height:100%;background:var(--acc);width:0;transition:width .3s}
+@media (max-width:600px){
+ body{font-size:15.5px}
+ h1{font-size:22px}
+ h2{font-size:19px}
+ header{padding:18px 12px 6px}
+ main{padding:6px 8px 40px}
+ section{padding:15px 13px;margin:12px 0}
+ .vn{grid-template-columns:1fr 1fr}
+ .iogrid{grid-template-columns:repeat(3,1fr);gap:8px}
+ .ioc{height:84px}
+ .ioc .f,.ioc .b{font-size:12.5px}
+ .ioc .f span{font-size:24px}
+ .hxt input{width:40px;font-size:16px}
+ .vn .cpu{grid-column:1/3;order:-1}
+ .vn .mem{grid-column:1/3}
+ .bubble{padding:10px 11px;font-size:13px;width:52%;right:2%}
+ .bubble h4{font-size:14px}
+ .bubble .x{width:26px;height:26px;top:5px;right:5px}
+ .bit{width:36px;height:36px;font-size:15px}
+ .w8{width:36px}
+ .btn{font-size:14px;padding:7px 13px}
+ table{font-size:13.5px}
+ td,th{padding:6px}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>Računalnik in kodiranje</h1>
+<p class="sub">Ponovitev: deli računalnika, informacija, kodiranje.</p>
+</header>
+<nav><div class="in">
+<a href="#pc-model">Model računalnika</a>
+<a href="#vn">Von Neumann</a>
+<a href="#nadstropja">Naloga: nadstropja</a>
+<a href="#hex">Bit → hex</a>
+<a href="#tabela">Kodna tabela</a>
+<a href="#slika">Velikost slike</a>
+<a href="#enote">Enote</a>
+<a href="#osnove">Osnove</a>
+<a href="#kviz">Kviz</a>
+</div></nav>
+<main>
+
+<section id="pc-model">
+<h2>Model računalnika</h2>
+<div class="task"><b>Kaj narediš?</b><ol><li>Klikni na del v ohišju (ali na gumb spodaj).</li><li>Računalnik se približa temu delu.</li><li>Desno se v sliki odpre okence: kaj dela in v katero skupino spada.</li><li>Klikni <b>×</b> za celo ohišje.</li></ol></div>
+<div class="pcwrap"><svg id="pc" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="10" width="380" height="280" rx="16" fill="#2a3144" stroke="#55607a" stroke-width="3"/>
+<g class="part" data-p="mb"><rect x="30" y="25" width="250" height="200" rx="10" fill="#2e7d4f"/><text x="40" y="215">Matična plošča</text></g>
+<g class="part" data-p="cpu"><rect x="110" y="45" width="60" height="55" rx="8" fill="#c9cfdb"/><rect x="122" y="56" width="36" height="33" rx="5" fill="#8e97a8"/><text x="122" y="120">CPE</text></g>
+<g class="part" data-p="ram"><rect x="195" y="40" width="10" height="80" rx="3" fill="#3b6fd8"/><rect x="210" y="40" width="10" height="80" rx="3" fill="#3b6fd8"/><rect x="225" y="40" width="10" height="80" rx="3" fill="#3b6fd8"/><text x="192" y="136">RAM</text></g>
+<g class="part" data-p="rom"><rect x="45" y="150" width="36" height="22" rx="5" fill="#f2b84b"/><text x="40" y="190">ROM</text></g>
+<g class="part" data-p="gpu"><rect x="95" y="150" width="170" height="30" rx="7" fill="#d2453b"/><text x="140" y="170">Grafična kartica</text></g>
+<g class="part" data-p="psu"><rect x="30" y="235" width="120" height="45" rx="9" fill="#5a5f6b"/><text x="45" y="262">Napajalnik</text></g>
+<g class="part" data-p="ssd"><rect x="295" y="40" width="80" height="60" rx="8" fill="#8a5cd6"/><text x="306" y="75">Disk SSD</text></g>
+<g class="part" data-p="hdd"><rect x="295" y="115" width="80" height="60" rx="8" fill="#6b46b0"/><circle cx="335" cy="140" r="14" fill="#9b7be0"/><text x="306" y="168">Disk HDD</text></g>
+<g class="part" data-p="fan"><circle cx="335" cy="235" r="35" fill="#3a4258"/><circle cx="335" cy="235" r="8" fill="#9aa3b8"/><text x="312" y="280">Hlajenje</text></g>
+</svg><div class="bubble" id="pcinfo" hidden></div></div>
+<div class="row" style="margin-top:10px" id="pcbtns"></div>
+<h3>Zunaj računalnika</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Najprej ugani: vhodna ali izhodna?</li><li>Klikni kartico. Obrne se in pokaže odgovor.</li></ol></div>
+<div class="iogrid" id="ioBtns"></div>
+<div class="legend"><span class="tag tin">Vhodna</span> v računalnik <span class="tag tout">Izhodna</span> iz računalnika <span class="tag tboth">Oboje</span> <span class="tag tmem">Pomnilnik</span></div>
+<h3>Nova naloga: naprave, ki delajo oboje</h3>
+<div class="box ex"><b>Primer: zaslon na dotik (telefon)</b>
+<ol><li>Vprašaj se: <b>ali pošilja podatke v računalnik?</b> Da – ko se ga dotakneš, pošlje, kje si pritisnil. → vhod</li>
+<li>Vprašaj se: <b>ali kaže rezultat človeku?</b> Da – kaže sliko. → izhod</li>
+<li>Obe vprašanji = da, zato je <b>vhodno-izhodna enota</b>.</li></ol>
+<p style="margin:0">Primerjava: kot <b>okence v trgovini</b> – skozi njega daš denar (vhod) in dobiš kruh (izhod).</p></div>
+<div class="task"><b>Kaj narediš?</b><ol><li>Preberi napravo na kartici.</li><li>Izberi, kam spada.</li><li>Razlaga se pokaže na isti kartici. Klikni <b>Naslednja</b>.</li></ol></div>
+<div class="sortcard" id="sortcard"></div>
+</section>
+
+<section id="vn">
+<h2>Von Neumannov model</h2>
+<p>Računalnik ima <b>4 skupine</b>: vhodne enote, <b>CPE</b>, pomnilnik, izhodne enote. V pomnilniku so <b>podatki in ukazi (programi)</b> skupaj.</p>
+<div class="task"><b>Kaj narediš?</b><ol><li>Klikni na skupino.</li><li>Preberi, kaj dela in kateri deli spadajo vanjo.</li></ol></div>
+<div class="vn">
+<div data-g="in">⌨️<br><b>Vhodne enote</b></div>
+<div data-g="cpu" class="cpu">🧠<br><b>CPE</b><br><small>krmilna + aritmetično-logična enota</small></div>
+<div data-g="out">🖥️<br><b>Izhodne enote</b></div>
+<div data-g="mem" class="mem">🗄️ <b>Pomnilnik</b> – podatki + ukazi</div>
+</div>
+<div class="info" id="vninfo">Klikni na skupino.</div>
+<div class="box bad"><b>Past iz kviza:</b> matična plošča <b>ne spada v nobeno skupino</b>. Je samo »plošča«, ki vse dele poveže med sabo.</div>
+</section>
+
+<section id="nadstropja">
+<h2>Naloga: Tomaž in nadstropja</h2>
+<div class="box"><b>Naloga:</b> Ko izvemo, da Tomaž stanuje v pritličju, dobimo <b>3 bite</b> informacije. Največ koliko nadstropij ima zgradba?</div>
+<h3>Razlaga v korakih</h3>
+<ol>
+<li><b>1 bit</b> = odgovor na eno vprašanje »da/ne«. Izbira med <b>2</b> možnostma.</li>
+<li>Z <b>n</b> biti izbiramo med <b>2<sup>n</sup></b> možnostmi.</li>
+<li>Tu je <b>n = 3</b>, torej 2 · 2 · 2 = <b>8</b> možnosti.</li>
+<li>Ena možnost = ena etaža, kjer bi Tomaž lahko živel (pritličje je tudi ena).</li>
+<li>Zato ima zgradba <b>največ 8 nadstropij</b>.</li>
+</ol>
+<div class="box ok"><b>Primerjava iz življenja:</b> igra »ugani etažo«. Vprašaš: »Si v zgornji polovici?« Vsak odgovor polovico etaž izloči. Pri 8 etažah rabiš točno <b>3 vprašanja</b>: 8 → 4 → 2 → 1.</div>
+<div class="box"><b>Deček v kleti</b> (drugi kviz) je ista naloga: klet je samo ena od etaž. Bite pretvoriš v 2<sup>n</sup> in to je število etaž.</div>
+<h3>Preizkusi sam</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Izberi število bitov.</li><li>Poglej, koliko etaž dobiš.</li><li>Klikni <b>Ugani etažo</b> in poglej, kako vsako vprašanje prepolovi etaže.</li></ol></div>
+<div class="row" id="bitsel"></div>
+<div class="bld" style="margin-top:12px">
+<div class="house" id="house"></div>
+<div style="flex:1;min-width:200px">
+<div class="big" id="bform"></div>
+<p id="btxt"></p>
+<button class="btn main" id="guessBtn">Ugani etažo</button>
+<div class="info" id="guessinfo" style="min-height:0">Tukaj se pokažejo vprašanja.</div>
+</div>
+</div>
+<h3>Tabela, ki si jo zapomni</h3>
+<table><tr><th>biti (n)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>8</td></tr><tr><th>možnosti (2<sup>n</sup>)</th><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>256</td></tr></table>
+<p>Obratno: če imaš <b>68</b> znakov, iščeš najmanjši 2<sup>n</sup>, ki je ≥ 68 → 2<sup>7</sup> = 128 → <b>7 bitov</b>.</p>
+</section>
+
+<section id="hex">
+<h2>Bitni zapis → šestnajstiški (hex)</h2>
+<p>Bite razdeliš v skupine po <b>4</b>. Vsaka skupina je en hex znak (0–9, potem A=10, B=11, C=12, D=13, E=14, F=15).</p>
+<table class="mono"><tr><th>bit</th><th>hex</th><th>bit</th><th>hex</th></tr>
+<tr><td>0000</td><td>0</td><td>1000</td><td>8</td></tr><tr><td>0001</td><td>1</td><td>1001</td><td>9</td></tr><tr><td>0010</td><td>2</td><td>1010</td><td>A</td></tr><tr><td>0011</td><td>3</td><td>1011</td><td>B</td></tr><tr><td>0100</td><td>4</td><td>1100</td><td>C</td></tr><tr><td>0101</td><td>5</td><td>1101</td><td>D</td></tr><tr><td>0110</td><td>6</td><td>1110</td><td>E</td></tr><tr><td>0111</td><td>7</td><td>1111</td><td>F</td></tr></table>
+<h3>Vaja: sam izpolni tabelo</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Pod vsako skupino 4 bitov vpiši hex znak (0–9 ali A–F, mala črka tudi velja).</li><li>Pomagaš si s številkami 8 4 2 1 pod biti.</li><li>Klikni <b>Preveri</b>. Zeleno = prav, rdeče = narobe.</li><li><b>Nov primer</b> ti da nove bite.</li></ol></div>
+<p class="mono" id="hxq" style="font-size:18px"></p>
+<div class="hxt"><table id="hxT"></table></div>
+<div class="row" style="margin-top:10px"><button class="btn main" id="hxC">Preveri</button><button class="btn" id="hxN">Nov primer</button><button class="btn" id="hxS">Pokaži rešitev</button></div>
+<div id="hxR"></div>
+<h3>Klikni bite (8 bitov)</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Klikni na kvadratek, da se spremeni 0 ↔ 1.</li><li>Pod kvadratki je vrednost mesta (128, 64 …).</li><li>Poglej desetiško in hex število.</li></ol></div>
+<div class="bits" id="bitrow"></div>
+<div class="bits" id="bitw"></div>
+<div class="box" id="bitres"></div>
+</section>
+
+<section id="tabela">
+<h2>Kodna tabela</h2>
+<h3>Koliko bitov za en znak?</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Obkljukaj, kaj mora biti v tabeli.</li><li>Poglej, koliko znakov je vseh.</li><li>Poglej, koliko bitov rabiš (2<sup>n</sup> ≥ znaki).</li></ol></div>
+<div class="chk" id="chk"></div>
+<div class="box" id="chkres"></div>
+<h3>Naloga: prekodiraj z lastno tabelo</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Poglej prvo skupino 4 bitov.</li><li>Poišči jo v tabeli in pod njo vpiši črko.</li><li>Tako za vse skupine. Klikni <b>Preveri</b>.</li><li><b>Nova beseda</b> ti da nov primer.</li></ol></div>
+<div class="hxt"><table class="mono" id="ownT"></table></div>
+<div class="hxt" style="margin-top:10px"><table id="ownQ"></table></div>
+<div class="row" style="margin-top:10px"><button class="btn main" id="ownC">Preveri</button><button class="btn" id="ownN">Nova beseda</button><button class="btn" id="ownS">Pokaži rešitev</button></div>
+<div id="ownR"></div>
+<h3>ASCII</h3>
+<p>V ASCII ima znak <b>8 bitov</b>. Zapomni si: velike črke se začnejo z <b>0100</b> ali <b>0101</b> (A = 0100 0001), male z <b>0110</b> ali <b>0111</b> (a = 0110 0001). Zadnji 4 biti povedo, katera črka po vrsti.</p>
+<table class="mono"><tr><th>prvi 4 biti</th><th>pomen</th></tr><tr><td>0100</td><td>velike A–O (0001 = A)</td></tr><tr><td>0101</td><td>velike P–Z (0000 = P)</td></tr><tr><td>0110</td><td>male a–o (0001 = a)</td></tr><tr><td>0111</td><td>male p–z (0000 = p)</td></tr></table>
+<h3>Naloga: prekodiraj ASCII</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Prvi 4 biti povedo: velika ali mala črka.</li><li>Zadnji 4 biti povedo, katera po vrsti (0001 = 1. črka).</li><li>Pod vsak bajt vpiši črko in klikni <b>Preveri</b>.</li></ol></div>
+<div class="hxt"><table id="asQ"></table></div>
+<div class="row" style="margin-top:10px"><button class="btn main" id="asC">Preveri</button><button class="btn" id="asN">Nova beseda</button><button class="btn" id="asS">Pokaži rešitev</button></div>
+<div id="asR"></div>
+</section>
+
+<section id="slika">
+<h2>Velikost bitne slike</h2>
+<div class="box"><b>Formula:</b> širina × višina × barvna globina (biti) = biti. ÷ 8 = bajti. ÷ 1024 = KiB.<br>Običajen RGB = <b>24 bitov</b> (3 bajti na piko).</div>
+<h3>Naloga: izračunaj velikost</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Preberi sliko: širina, višina, barve.</li><li>Izračunaj na papir: pike × biti ÷ 8 ÷ 1024.</li><li>Vpiši rezultat v KiB (zaokroži na celo število) in klikni <b>Preveri</b>.</li><li>Če ne gre, klikni <b>Pokaži korake</b>.</li></ol></div>
+<div class="box" id="imgQ" style="font-size:18px"></div>
+<div class="row"><input type="text" inputmode="decimal" id="imgA" placeholder="npr. 297" style="max-width:160px"> KiB</div>
+<div class="row" style="margin-top:10px"><button class="btn main" id="imgC">Preveri</button><button class="btn" id="imgN">Nova slika</button><button class="btn" id="imgS">Pokaži korake</button></div>
+<div id="imgR"></div>
+<p>Barvna globina: <b>2 barvi = 1 bit</b>, 4 barve = 2 bita, 16 barv = 4 biti, 256 barv = 8 bitov.</p>
+</section>
+
+<section id="enote">
+<h2>Enote</h2>
+<div class="task"><b>Kaj narediš?</b><ol><li>Klikni na enoto.</li><li>Poglej, koliko je vredna.</li></ol></div>
+<div class="ladder" id="ladder"></div>
+<div class="box" id="ladres">Vsaka stopnica je <b>1024 ×</b> večja (2<sup>10</sup>). Samo 1 B = <b>8 b</b>.</div>
+<h3>RAM ali disk?</h3>
+<table><tr><th></th><th>Glavni pomnilnik (RAM)</th><th>Disk (HDD/SSD)</th></tr>
+<tr><td>Shranjuje</td><td><b>začasno</b></td><td><b>trajno</b></td></tr>
+<tr><td>Ob izklopu</td><td>se <b>pobriše</b></td><td>ostane</td></tr>
+<tr><td>Kaj je v njem</td><td><b>zagnani</b> programi</td><td>vsi programi in datoteke</td></tr>
+<tr><td>Velikost</td><td>manjši</td><td>večji</td></tr>
+<tr><td>Brez njega</td><td>računalnik <b>ne dela</b></td><td>ni kje shraniti</td></tr></table>
+<h3>Izvorna koda ali .exe?</h3>
+<table><tr><th>Izvorna koda</th><th>Izvedljiv program (.exe)</th></tr>
+<tr><td>berljiva človeku</td><td>ni berljiv človeku</td></tr>
+<tr><td>besedilna datoteka</td><td>binarna datoteka</td></tr>
+<tr><td>ni izvedljiva</td><td>se zažene</td></tr>
+<tr><td>napiše jo programer</td><td>razume ga računalnik</td></tr></table>
+</section>
+
+<section id="osnove">
+<h2>Šolske osnove</h2>
+<h3>Kaj računalnik »razume«?</h3>
+<div class="box">Računalnik razume samo <b>binarna števila</b> (0 in 1). Tudi slike, zvok in video so zapisani s <b>številkami</b> (biti). <b>Izhodna enota</b> (npr. zaslon) bite spremeni v obliko, ki jo razume človek.</div>
+<h3>BIOS, operacijski sistem, CPE</h3>
+<div class="task"><b>Kaj narediš?</b><ol><li>Klikni na kartico.</li><li>Preberi, kaj ta del dela in česa ne dela.</li></ol></div>
+<div class="row" id="osBtns"></div>
+<div class="info" id="osInfo">Klikni na kartico.</div>
+<h3>Barve RGB</h3>
+<p>Vsaka barva ima 3 dele: <b>R</b> (rdeča), <b>G</b> (zelena), <b>B</b> (modra). Vsak del je od <b>0</b> do <b>255</b> = 8 bitov. Skupaj <b>3 × 8 = 24 bitov</b> (true color).</p>
+<div class="task"><b>Kaj narediš?</b><ol><li>Premikaj drsnike R, G, B.</li><li>Poglej barvo in zapis RGB.</li><li>Klikni barvo spodaj, da vidiš, kako jo sestaviš.</li></ol></div>
+<div class="rgbw"><div id="rgbSw" class="sw"></div><div style="flex:1;min-width:200px">
+<label class="sl">R <input type="range" min="0" max="255" id="rR"><span id="vR"></span></label>
+<label class="sl">G <input type="range" min="0" max="255" id="rG"><span id="vG"></span></label>
+<label class="sl">B <input type="range" min="0" max="255" id="rB"><span id="vB"></span></label>
+<div class="mono big" id="rgbT" style="font-size:18px"></div></div></div>
+<div class="row" id="rgbBtns" style="margin-top:10px"></div>
+<h3>Koliko bitov, če možnosti niso 2, 4, 8 …?</h3>
+<p>Iščeš najmanjši <b>2<sup>n</sup></b>, ki je <b>enak ali večji</b> od števila možnosti. Primer: kocka ima <b>6</b> strani. 2<sup>2</sup> = 4 je premalo, 2<sup>3</sup> = 8 je dovolj → <b>3 biti</b>.</p>
+<div class="task"><b>Kaj narediš?</b><ol><li>Vpiši, koliko je možnosti (npr. 6, 20, 100).</li><li>Poglej, koliko bitov rabiš.</li></ol></div>
+<div class="row"><input type="text" inputmode="numeric" id="optIn" value="20" style="max-width:120px"> možnosti</div>
+<div class="box" id="optOut"></div>
+<h3>Največje število z n biti</h3>
+<p>Z <b>n</b> biti zapišeš <b>2<sup>n</sup></b> števil: od 0 do <b>2<sup>n</sup> − 1</b>. Ker začnemo pri 0, je največje za 1 manjše. Primer: 3 biti → 111 = <b>7</b>.</p>
+<div class="task"><b>Kaj narediš?</b><ol><li>Izberi število bitov.</li><li>Poglej največje število (vsi biti so 1).</li></ol></div>
+<div class="row" id="maxBtns"></div>
+<div class="box" id="maxOut"></div>
+<h3>Koliko bitov ima beseda v ASCII?</h3>
+<div class="box">Vsak znak = <b>8 bitov</b> (1 bajt). Beseda »Mama« ima 4 znake → 4 × 8 = <b>32 bitov</b> = 4 bajti.</div>
+</section>
+
+<section id="kviz">
+<h2>Kviz</h2>
+<div class="task"><b>Kaj narediš?</b><ol><li>Izberi temo. V oklepaju piše, koliko vprašanj ima.</li><li>Klikni odgovor in preberi razlago.</li><li>Na koncu lahko ponoviš samo napačne.</li></ol></div>
+<div class="row" id="topics"></div>
+<div class="prog"><i id="pbar"></i></div>
+<div id="qbox"></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+/* PC model */
+const parts={
+mb:{n:'Matična plošča',g:'V nobeni skupini',t:'Velika plošča, na katero so priključeni vsi deli. Po njej se pošiljajo podatki med deli.',v:[0,0,400,300]},
+cpu:{n:'CPE (procesor)',g:'Centralno procesna enota',t:'»Možgani« računalnika. Izvaja ukaze programov in računa.',v:[80,25,140,105]},
+ram:{n:'RAM – glavni (delovni) pomnilnik',g:'Pomnilnik',t:'Začasno hrani zagnane programe in podatke. Ob izklopu se pobriše.',v:[170,25,90,120]},
+rom:{n:'ROM z BIOS-om',g:'Pomnilnik',t:'Na matični plošči. V njem je BIOS, ki zažene računalnik. Ne pobriše se.',v:[25,130,90,75]},
+gpu:{n:'Grafična kartica',g:'Izhod (pomaga zaslonu)',t:'Pripravi sliko za zaslon. Ima svoj pomnilnik.',v:[80,120,200,80]},
+psu:{n:'Napajalnik',g:'V nobeni skupini',t:'Spremeni elektriko iz vtičnice v napetost za dele računalnika.',v:[15,220,160,75]},
+ssd:{n:'Disk SSD',g:'Pomnilnik (zunanji, trajni)',t:'Trajno hrani programe in datoteke. Hiter, nima premikajočih delov.',v:[280,25,110,90]},
+hdd:{n:'Disk HDD',g:'Pomnilnik (zunanji, trajni)',t:'Trajno hrani podatke na vrteči plošči. Počasnejši od SSD.',v:[280,100,110,90]},
+fan:{n:'Hlajenje (ventilator)',g:'V nobeni skupini',t:'Odvaja toploto, da se procesor ne pregreje.',v:[280,185,110,110]}};
+const pc=$('pc');
+function showPart(k){
+ pc.classList.add('focus');
+ pc.querySelectorAll('.part').forEach(e=>e.classList.toggle('sel',e.dataset.p===k));
+ const [x,y,w,h]=parts[k].v,W=Math.max(w*2.25,h*1.3*4/3),H=W*3/4;
+ animView([x-(0.44*W-w)/2,y+h/2-H/2,W,H]);
+ const b=$('pcinfo');b.hidden=false;b.style.animation='none';b.offsetHeight;b.style.animation='';
+ b.innerHTML=`<button class="btn x" onclick="resetPc()" aria-label="Zapri">×</button><h4>${parts[k].n}</h4><p>${parts[k].t}</p><span class="tag">${parts[k].g}</span>`;
+ document.querySelectorAll('#pcbtns .btn').forEach(b=>b.classList.toggle('on',b.dataset.p===k));
+}
+let cur=[0,0,400,300],anim;
+function animView(t){cancelAnimationFrame(anim);const s=cur.slice(),t0=performance.now();
+ (function f(n){const p=Math.min(1,(n-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+ cur=s.map((v,i)=>v+(t[i]-v)*e);pc.setAttribute('viewBox',cur.join(' '));if(p<1)anim=requestAnimationFrame(f)})(t0)}
+function resetPc(){pc.classList.remove('focus');animView([0,0,400,300]);$('pcinfo').hidden=true;document.querySelectorAll('#pcbtns .btn').forEach(b=>b.classList.remove('on'))}
+pc.querySelectorAll('.part').forEach(e=>e.addEventListener('click',ev=>{ev.stopPropagation();showPart(e.dataset.p)}));
+Object.keys(parts).forEach(k=>{const b=document.createElement('button');b.className='btn';b.dataset.p=k;b.textContent={mb:'Matična plošča',cpu:'CPE',ram:'RAM',rom:'ROM',gpu:'Grafična',psu:'Napajalnik',ssd:'SSD',hdd:'HDD',fan:'Hlajenje'}[k];b.onclick=()=>showPart(k);$('pcbtns').appendChild(b)});
+const G={in:['Vhodna','tin'],out:['Izhodna','tout'],both:['Oboje','tboth'],mem:['Pomnilnik','tmem']};
+const io=[['⌨️','Tipkovnica','in'],['🖱️','Miška','in'],['🎤','Mikrofon','in'],['📷','Kamera','in'],['🖥️','Zaslon','out'],['🖨️','Tiskalnik','out'],['🔊','Zvočniki','out'],['💾','USB ključ','mem']];
+io.forEach(([e,n,g])=>{const c=document.createElement('button');c.className='ioc';c.innerHTML=`<div class="in"><div class="f"><span>${e}</span>${n}</div><div class="b ${G[g][1]}">${e} ${n}<br>${G[g][0]}</div></div>`;c.onclick=()=>c.classList.toggle('flip');$('ioBtns').appendChild(c)});
+const sortQ=[['🧾','Skener','in','Sliko papirja pošlje v računalnik.'],['📽️','Projektor','out','Sliko iz računalnika pokaže na steni.'],['🎧','Slušalke z mikrofonom','both','Slušalke = izhod (zvok ven), mikrofon = vhod (glas noter).'],['📱','Zaslon na dotik','both','Dotik pošlje podatke noter, slika pride ven.'],['🕹️','Igralna palica','in','Tvoje premike pošlje v računalnik.'],['💿','Zunanji disk','mem','Trajno hrani podatke.'],['🖨️','Tiskalnik s skenerjem','both','Tiska (izhod) in skenira (vhod).'],['✍️','Grafična tablica','in','Potezo pisala pošlje v računalnik.']];
+let si=0;
+function sortShow(){const [e,n]=sortQ[si];$('sortcard').innerHTML=`<div class="dev">${e}</div><div class="nm">${n}</div><div class="row">${Object.keys(G).map(k=>`<button class="btn" data-k="${k}">${G[k][0]}</button>`).join('')}</div><div class="fb"></div>`;
+ $('sortcard').querySelectorAll('.btn').forEach(b=>b.onclick=()=>{const [,,g,t]=sortQ[si],ok=b.dataset.k===g;$('sortcard').querySelectorAll('.btn').forEach(x=>{x.disabled=true;if(x.dataset.k===g)x.classList.add('on')});
+  $('sortcard').querySelector('.fb').innerHTML=`<div class="box ${ok?'ok':'bad'}"><b>${ok?'Pravilno!':'Ni čisto.'}</b> Pravilno: <b>${G[g][0]}</b>. ${t}</div><div class="row"><button class="btn main" id="sNext">Naslednja</button></div>`;$('sNext').onclick=()=>{si=(si+1)%sortQ.length;sortShow()}})}
+sortShow();
+/* VN */
+const vn={in:['Vhodne enote','Podatke pošljejo v računalnik.','tipkovnica, miška, mikrofon, kamera'],cpu:['CPE','Izvaja ukaze in računa. Krmilna enota vodi, aritmetično-logična računa.','procesor'],out:['Izhodne enote','Rezultat pokažejo človeku.','zaslon, tiskalnik, zvočniki'],mem:['Pomnilnik','Hrani podatke <b>in</b> ukaze (programe) skupaj. Tu so shranjeni podatki.','RAM, ROM, disk']};
+document.querySelectorAll('.vn div').forEach(d=>d.onclick=()=>{const v=vn[d.dataset.g];document.querySelectorAll('.vn div').forEach(x=>x.classList.toggle('on',x===d));$('vninfo').innerHTML=`<b>${v[0]}</b><br>${v[1]}<br><span class="tag">${v[2]}</span>`});
+/* building */
+let nb=3;
+function drawHouse(){const n=2**nb;$('house').innerHTML='';for(let i=0;i<n;i++){const f=document.createElement('div');f.className='fl'+(i===0?' me':'');f.textContent=i===0?'Tomaž (pritličje)':(i+'. nadstr.');$('house').appendChild(f)}
+ $('bform').innerHTML=`2<sup>${nb}</sup> = ${n} etaž`;$('btxt').innerHTML=`${nb} bit${nb===1?'':(nb===2?'a':'i')} → <b>${n}</b> možnosti → zgradba ima največ <b>${n}</b> etaž.`;$('guessinfo').textContent='Tukaj se pokažejo vprašanja.';
+ document.querySelectorAll('#bitsel .btn').forEach(b=>b.classList.toggle('on',+b.dataset.n===nb))}
+[1,2,3,4].forEach(n=>{const b=document.createElement('button');b.className='btn';b.dataset.n=n;b.textContent=n+' bit'+(n===1?'':n===2?'a':'i');b.onclick=()=>{nb=n;drawHouse()};$('bitsel').appendChild(b)});
+$('guessBtn').onclick=()=>{let lo=0,hi=2**nb-1,s='',q=1;while(lo<hi){const m=Math.floor((lo+hi)/2);s+=`${q}. vprašanje: »Je v etažah ${lo}–${m}?« → <b>da</b> (1 bit)<br>`;hi=m;q++}
+ $('guessinfo').innerHTML=s+`Ostane samo pritličje. Rabil si <b>${nb}</b> vprašanj = <b>${nb}</b> bitov.`};
+drawHouse();
+/* hex */
+const bv=[0,0,0,1,1,1,1,1];
+function drb(){$('bitrow').innerHTML='';$('bitw').innerHTML='';bv.forEach((v,i)=>{const b=document.createElement('button');b.className='bit'+(v?' one':'');b.textContent=v;b.onclick=()=>{bv[i]^=1;drb()};$('bitrow').appendChild(b);const w=document.createElement('div');w.className='w8';w.textContent=2**(7-i);$('bitw').appendChild(w)});
+ const d=parseInt(bv.join(''),2),sum=bv.map((v,i)=>v?2**(7-i):0).filter(x=>x);$('bitres').innerHTML=`Desetiško: ${sum.join(' + ')||'0'} = <b>${d}</b><br>Hex: <b class="mono">${d.toString(16).toUpperCase().padStart(2,'0')}</b>`}
+drb();
+let hxB=[];
+function hxNew(){const n=[4,6,6][Math.floor(Math.random()*3)];hxB=Array.from({length:n},()=>Math.floor(Math.random()*16));
+ const g=hxB.map(v=>v.toString(2).padStart(4,'0'));$('hxq').textContent=g.join(' ');
+ $('hxT').innerHTML='<tr><th>biti</th>'+g.map(x=>`<td class="mono">${x}<span class="pv">8 4 2 1</span></td>`).join('')+'</tr><tr><th>hex</th>'+g.map((x,i)=>`<td><input maxlength="1" data-i="${i}" autocomplete="off"></td>`).join('')+'</tr>';$('hxR').innerHTML=''}
+$('hxC').onclick=()=>{let ok=0;$('hxT').querySelectorAll('input').forEach(inp=>{const r=hxB[inp.dataset.i].toString(16).toUpperCase(),v=inp.value.trim().toUpperCase();inp.classList.toggle('r',v===r);inp.classList.toggle('w',v!==r);if(v===r)ok++});
+ $('hxR').innerHTML=`<div class="box ${ok===hxB.length?'ok':'bad'}">${ok} / ${hxB.length} pravilno.${ok===hxB.length?' Super! Klikni Nov primer.':' Pri rdečih seštej mesta z 1 (npr. 1011 = 8+2+1 = 11 = B).'}</div>`};
+$('hxS').onclick=()=>{$('hxR').innerHTML='<div class="box">'+hxB.map(v=>{const b=v.toString(2).padStart(4,'0'),p=[...b].map((c,i)=>c==='1'?[8,4,2,1][i]:0).filter(x=>x);return `<span class="mono">${b}</span> = ${p.join('+')||'0'} = ${v} = <b>${v.toString(16).toUpperCase()}</b>`}).join('<br>')+'</div>'};
+$('hxN').onclick=hxNew;hxNew();
+/* code table */
+const sets=[['Male črke (25)',25,1],['Velike črke (25)',25,1],['Števke 0–9 (10)',10,1],['Operatorji + - * / (4)',4,1],['Ločila . , ! ? (4)',4,1],['Presledek (1)',1,0]];
+sets.forEach((s,i)=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" ${s[2]?'checked':''} data-i="${i}"> ${s[0]}`;$('chk').appendChild(l)});
+function ct(){let n=0;$('chk').querySelectorAll('input').forEach(c=>{if(c.checked)n+=sets[c.dataset.i][1]});let b=0;while(2**b<n)b++;
+ $('chkres').innerHTML=n?`Vseh znakov: <b>${n}</b><br>2<sup>${b-1}</sup> = ${2**(b-1)} je premalo, 2<sup>${b}</sup> = ${2**b} je dovolj.<br>En znak = <b>${b} bitov</b>.`:'Obkljukaj vsaj eno skupino.'}
+$('chk').onchange=ct;ct();
+const own='abcdefghijkl'.split('');$('ownT').innerHTML='<tr><th>znak</th>'+own.map(c=>`<td>${c}</td>`).join('')+'</tr><tr><th>koda</th>'+own.map((c,i)=>`<td>${i.toString(2).padStart(4,'0')}</td>`).join('')+'</tr>';
+$('ownT').parentNode.style.overflowX='auto';
+const ownW=['ladja','glava','ideja','klada','bajka','jelka','hiba','kila','dlaka','gibka'];let ownCur='';
+function ownNew(){let w;do{w=ownW[Math.floor(Math.random()*ownW.length)]}while(w===ownCur);ownCur=w;
+ $('ownQ').innerHTML='<tr><th>biti</th>'+[...w].map(c=>`<td class="mono">${own.indexOf(c).toString(2).padStart(4,'0')}</td>`).join('')+'</tr><tr><th>črka</th>'+[...w].map((c,i)=>`<td><input class="tin8" maxlength="1" data-i="${i}" autocomplete="off" style="text-transform:none"></td>`).join('')+'</tr>';$('ownR').innerHTML=''}
+$('ownC').onclick=()=>{let ok=0;$('ownQ').querySelectorAll('input').forEach(inp=>{const r=ownCur[inp.dataset.i],v=inp.value.trim().toLowerCase();inp.classList.toggle('r',v===r);inp.classList.toggle('w',v!==r);if(v===r)ok++});
+ $('ownR').innerHTML=`<div class="box ${ok===ownCur.length?'ok':'bad'}">${ok} / ${ownCur.length} pravilno.${ok===ownCur.length?' Beseda: <b>'+ownCur+'</b>':' Pri rdečih poišči iste 4 bite v zgornji tabeli.'}</div>`};
+$('ownS').onclick=()=>{$('ownR').innerHTML='<div class="box">'+[...ownCur].map(c=>`<span class="mono">${own.indexOf(c).toString(2).padStart(4,'0')}</span> → <b>${c}</b>`).join('<br>')+`<br>Beseda: <b>${ownCur}</b></div>`};
+$('ownN').onclick=ownNew;ownNew();
+const asW=['Enigma','Bit','Koda','Miska','Disk','Ram','Tipka','Hex'];let asCur='';
+const bin8=c=>c.charCodeAt(0).toString(2).padStart(8,'0');
+function asNew(){let w;do{w=asW[Math.floor(Math.random()*asW.length)]}while(w===asCur);asCur=w;
+ $('asQ').innerHTML='<tr><th>bajt</th>'+[...w].map(c=>`<td class="mono">${bin8(c).slice(0,4)}<br>${bin8(c).slice(4)}</td>`).join('')+'</tr><tr><th>črka</th>'+[...w].map((c,i)=>`<td><input class="tin8" maxlength="1" data-i="${i}" autocomplete="off" style="text-transform:none"></td>`).join('')+'</tr>';$('asR').innerHTML=''}
+$('asC').onclick=()=>{let ok=0,caseErr=0;$('asQ').querySelectorAll('input').forEach(inp=>{const r=asCur[inp.dataset.i],v=inp.value.trim();inp.classList.toggle('r',v===r);inp.classList.toggle('w',v!==r);if(v===r)ok++;else if(v.toLowerCase()===r.toLowerCase())caseErr++});
+ $('asR').innerHTML=`<div class="box ${ok===asCur.length?'ok':'bad'}">${ok} / ${asCur.length} pravilno.${ok===asCur.length?' Beseda: <b>'+asCur+'</b>':(caseErr?' Pazi na veliko/malo črko (0100 = velika, 0110 = mala).':' Zadnji 4 biti = katera črka po vrsti.')}</div>`};
+$('asS').onclick=()=>{$('asR').innerHTML='<div class="box">'+[...asCur].map(c=>{const b=bin8(c),up=c===c.toUpperCase();return `<span class="mono">${b.slice(0,4)} ${b.slice(4)}</span> → ${up?'velika':'mala'}, ${parseInt(b.slice(4),2)+(b[3]==='1'?16:0)}. črka → <b>${c}</b>`}).join('<br>')+'</div>'};
+$('asN').onclick=asNew;asNew();
+/* image */
+const imgT=[[352,288,24,'RGB'],[640,480,24,'RGB'],[320,240,8,'256 barv'],[512,512,1,'2 barvi'],[800,600,24,'RGB'],[256,128,4,'16 barv'],[1024,768,8,'256 barv'],[160,120,24,'RGB']];let imgI=-1;
+function imgNew(){let i;do{i=Math.floor(Math.random()*imgT.length)}while(i===imgI);imgI=i;const [w,h,d,c]=imgT[i];
+ $('imgQ').innerHTML=`Slika <b>${w} × ${h}</b>, <b>${c}</b>. Koliko KiB zaseda (nestisnjena)?`;$('imgA').value='';$('imgR').innerHTML=''}
+function imgK(){const [w,h,d]=imgT[imgI];return w*h*d/8/1024}
+$('imgC').onclick=()=>{const v=parseFloat($('imgA').value.replace(',','.')),k=imgK(),ok=Math.abs(v-k)<1;
+ $('imgR').innerHTML=`<div class="box ${ok?'ok':'bad'}"><b>${ok?'Pravilno!':'Ni čisto.'}</b> ${ok?'Rezultat je '+Math.round(k*10)/10+' KiB.':'Najprej ugotovi bite na piko: '+imgT[imgI][3]+'. Potem klikni Pokaži korake.'}</div>`};
+$('imgS').onclick=()=>{const [w,h,d,c]=imgT[imgI],p=w*h,b=p*d,B=b/8,f=x=>x.toLocaleString('sl',{maximumFractionDigits:1});
+ $('imgR').innerHTML=`<div class="box">1) ${c} = <b>${d} bit${d===1?'':d===2?'a':d<5?'i':'ov'}</b> na piko<br>2) pike: ${w} × ${h} = ${f(p)}<br>3) biti: ${f(p)} × ${d} = ${f(b)} b<br>4) bajti: ÷ 8 = ${f(B)} B<br>5) KiB: ÷ 1024 = <b>${f(B/1024)} KiB</b></div>`};
+$('imgN').onclick=imgNew;imgNew();
+/* ladder */
+const lad=[['1 B (bajt)','= 8 b (bitov)'],['1 KB','= 1024 B = 2<sup>10</sup> B'],['1 MB','= 1024 KB = 2<sup>20</sup> B'],['1 GB','= 1024 MB = 2<sup>30</sup> B'],['1 TB','= 1024 GB = 2<sup>40</sup> B']];
+lad.forEach(([a,b])=>{const x=document.createElement('button');x.className='btn';x.innerHTML='<b>'+a+'</b>';x.onclick=()=>{$('ladres').innerHTML=`<b>${a}</b> ${b}`;document.querySelectorAll('#ladder .btn').forEach(y=>y.classList.toggle('on',y===x))};$('ladder').appendChild(x)});
+/* osnove */
+const os={'BIOS':['Je v <b>ROM-u</b> na matični plošči.','✓ Ob zagonu <b>preveri osnovno strojno opremo</b>.<br>✓ Poišče, kje je <b>operacijski sistem</b>, in ga zažene.<br>✗ Ne zaganja uporabniških programov in ne deli sistemskih virov.'],
+'Operacijski sistem':['Vmesnik med strojno in programsko opremo.','✓ <b>Dodeli sistemske vire</b> (CPE, pomnilnik) <b>zagnanim programom</b> (procesom) in sebi.<br>✓ Določi vrstni red izvajanja programov.<br>✗ Ni uporabniški program.'],
+'CPE':['»Možgani« računalnika.','✓ <b>Izvršuje ukaze</b>, izvaja programe, obdeluje podatke.<br>✓ <b>Upravlja in nadzira</b> delovanje računalnika.<br>✗ Ne hrani podatkov (to dela pomnilnik).<br>✗ Brez CPE računalnik <b>ne dela</b>.'],
+'Licenca':['Dovoljenje.','✓ Programska licenca je <b>dovoljenje za uporabo</b> programa.<br>✗ Ni navodilo in ni dokumentacija.'],
+'Izvedljiv program':['.exe, .bat','✓ Binarna datoteka, razume jo <b>računalnik</b>, se zažene.<br>✗ Človek je ne more brati.']};
+Object.keys(os).forEach(k=>{const b=document.createElement('button');b.className='btn';b.textContent=k;b.onclick=()=>{document.querySelectorAll('#osBtns .btn').forEach(x=>x.classList.toggle('on',x===b));$('osInfo').innerHTML=`<b>${k}</b> – ${os[k][0]}<br>${os[k][1]}`};$('osBtns').appendChild(b)});
+function rgb(){const r=$('rR').value,g=$('rG').value,b=$('rB').value;$('vR').textContent=r;$('vG').textContent=g;$('vB').textContent=b;$('rgbSw').style.background=`rgb(${r},${g},${b})`;$('rgbT').textContent=`RGB (${r},${g},${b})`}
+['rR','rG','rB'].forEach(i=>$(i).oninput=rgb);
+const cols=[['Rdeča',255,0,0],['Zelena',0,255,0],['Modra',0,0,255],['Rumena',255,255,0],['Vijolična',255,0,255],['Turkizna',0,255,255],['Bela',255,255,255],['Črna',0,0,0]];
+cols.forEach(([n,r,g,b])=>{const x=document.createElement('button');x.className='btn';x.innerHTML=`<span class="dot" style="background:rgb(${r},${g},${b})"></span>${n}`;x.onclick=()=>{$('rR').value=r;$('rG').value=g;$('rB').value=b;rgb()};$('rgbBtns').appendChild(x)});
+$('rR').value=255;$('rG').value=128;$('rB').value=0;rgb();
+function opt(){const n=parseInt($('optIn').value);if(!(n>0)){$('optOut').textContent='Vpiši število večje od 0.';return}let b=0;while(2**b<n)b++;
+ $('optOut').innerHTML=(b>0?`2<sup>${b-1}</sup> = ${2**(b-1)} je premalo. `:'')+`2<sup>${b}</sup> = ${2**b} je dovolj.<br>Rabiš <b>${b} bit${b===1?'':b===2?'a':b<5?'e':'ov'}</b>.`+(2**b===n?' (Točno se izide.)':'')}
+$('optIn').oninput=opt;opt();
+[1,2,3,4,5,6,8].forEach(n=>{const x=document.createElement('button');x.className='btn';x.textContent=n+' bit'+(n===1?'':n===2?'a':n<5?'i':'ov');x.onclick=()=>{document.querySelectorAll('#maxBtns .btn').forEach(y=>y.classList.toggle('on',y===x));$('maxOut').innerHTML=`<span class="mono">${'1'.repeat(n)}</span> → 2<sup>${n}</sup> − 1 = ${2**n} − 1 = <b>${2**n-1}</b><br>Vseh števil je ${2**n} (od 0 do ${2**n-1}).`};$('maxBtns').appendChild(x)});
+document.querySelector('#maxBtns .btn:nth-child(3)').click();
+/* quiz */
+const Q={
+'Informacija':[
+['Ko izvemo, da deček živi v kleti, dobimo 4 bite. Največ koliko etaž ima hiša?',['4','8','16','32'],2,'2⁴ = 16 možnosti → 16 etaž. Klet je ena od njih.'],
+['Zgradba ima 32 etaž. Koliko bitov dobimo, ko izvemo etažo?',['5','6','16','32'],0,'2⁵ = 32, torej 5 bitov.'],
+['Ko izvemo, da Tomaž živi v pritličju, dobimo 3 bite. Največ koliko nadstropij?',['3','6','8','9'],2,'2³ = 8.'],
+['Koliko bitov rabimo za 256 barv?',['4','8','16','256'],1,'2⁸ = 256.'],
+['Koliko različnih števil pokažeš s 5 prsti (vsak prst = bit)?',['5','10','32','25'],2,'2⁵ = 32 (z 0 vred).'],
+['Hiša ima 16 etaž. Koliko bitov informacije dobimo, ko izvemo, kje kdo živi?',['2','4','8','16'],1,'2⁴ = 16, torej 4 biti.']],
+'Kodiranje':[
+['1111 1111 1010 0001 1101 0011 v hex je:',['FF A1 D3','FF B1 C3','EE A1 D3','FF 10 13'],0,'1111=F, 1010=A, 0001=1, 1101=D, 0011=3.'],
+['Kodna tabela: 25 malih + 25 velikih črk + 10 števk + 4 operatorji + 4 ločila. Koliko bitov za znak?',['5','6','7','8'],2,'Skupaj 68. 2⁶ = 64 je premalo, 2⁷ = 128 je dovolj → 7 bitov.'],
+['ASCII 0100 0101 je:',['e','E','A','5'],1,'0100 = velika črka, 0101 = 5. po vrsti → E.'],
+['ASCII 0110 0001 je:',['a','A','1','b'],0,'0110 = mala črka, 0001 = prva → a.'],
+['1100 v hex je:',['B','C','D','12'],1,'8 + 4 = 12 = C.'],
+['V bitnem zapisu 001110100 so 3-bitna števila. Katera?',['1 6 4','1 3 4','7 2 0','3 5 0'],0,'001=1, 110=6, 100=4.']],
+'Računalnik':[
+['Kaj je v pomnilniku po von Neumannu?',['Samo podatki','Samo ukazi','Podatki in ukazi'],2,'Podatki in programi so v istem pomnilniku.'],
+['V katero skupino spada matična plošča?',['CPE','Pomnilnik','Vhodne enote','V nobeno'],3,'Matična plošča samo povezuje dele.'],
+['Kaj velja za RAM?',['Trajno hrani podatke','Ob izklopu se pobriše','Je večji od diska','Računalnik dela tudi brez njega'],1,'RAM je začasen: ob izklopu se pobriše.'],
+['Kje so v RAM-u?',['Vsi programi na disku','Zagnani programi','Samo BIOS','Nič'],1,'V RAM-u so programi, ki tečejo.'],
+['Kje je BIOS?',['Na disku','V RAM-u','V ROM-u na matični plošči'],2,'BIOS je v ROM-u, zato se ne pobriše.'],
+['Kaj velja za izvorno kodo?',['Je izvedljiva (.exe)','Je binarna datoteka','Je berljiva človeku','Razume jo računalnik'],2,'Izvorna koda je besedilo, ki ga napiše programer. Ni izvedljiva.']],
+'Slike in enote':[
+['Slika 352 × 288, RGB (24 bitov). Koliko prostora?',['297 KiB','304 KiB','297 MiB','290 KiB'],0,'352·288 = 101 376 pik · 3 B = 304 128 B ÷ 1024 = 297 KiB.'],
+['Slika 100 × 100, 2 barvi. Koliko bitov?',['100','10 000','20 000','200'],1,'2 barvi = 1 bit. 100·100·1 = 10 000 b.'],
+['1 MB = ?',['1000 KB','1024 KB','1024 B','8 KB'],1,'Vsaka stopnica je 1024 ×.'],
+['2³⁰ B je:',['1 KB','1 MB','1 GB','1 TB'],2,'2¹⁰ = KB, 2²⁰ = MB, 2³⁰ = GB.'],
+['1 B = ?',['8 b','10 b','1024 b','2 b'],0,'En bajt ima 8 bitov.'],
+['Koliko bitov na piko ima slika s 16 barvami?',['2','4','8','16'],1,'2⁴ = 16, torej 4 biti.']]};
+Q['Osnove']=[
+['Kakšne podatke razume računalnik?',['Desetiška števila','Besedilo','Binarna števila','Sliko'],2,'Računalnik razume samo 0 in 1.'],
+['Kaj NE dela BIOS?',['Preveri strojno opremo ob zagonu','Zažene operacijski sistem','Deli sistemske vire programom'],2,'Sistemske vire deli operacijski sistem.'],
+['Komu OS dodeli sistemske vire?',['Programerju','Zagnanemu programu (procesu)','BIOS-u','Tipkovnici'],1,'Vire dobijo procesi (in OS sam).'],
+['Kaj velja za CPE?',['Hrani podatke','Izvršuje ukaze','Računalnik dela brez nje','Je izhodna enota'],1,'CPE izvaja ukaze in nadzira delovanje.'],
+['RGB (255,0,0) je:',['Rdeča','Zelena','Modra','Bela'],0,'Samo R je poln.'],
+['RGB (0,0,0) je:',['Bela','Črna','Siva','Modra'],1,'Vse ugasnjeno = črna.'],
+['Koliko bitov rabiš za 6 možnosti (kocka)?',['2','3','6','8'],1,'2² = 4 premalo, 2³ = 8 dovolj → 3.'],
+['Največje število s 4 biti?',['4','15','16','8'],1,'1111 = 2⁴ − 1 = 15.'],
+['Koliko bitov ima beseda »Oče« v ASCII (razširjena)?',['3','8','24','16'],2,'3 znaki × 8 bitov = 24.'],
+['Ključ ima 10 bitov. Koliko kombinacij je največ?',['10','20','100','1024'],3,'2¹⁰ = 1024.']];
+Q['Vse']=Object.values(Q).flat();
+let list=[],qi=0,score=0,wrong=[];
+function start(arr){list=arr.slice().sort(()=>Math.random()-.5);qi=0;score=0;wrong=[];showQ()}
+function showQ(){$('pbar').style.width=(qi/list.length*100)+'%';
+ if(qi>=list.length){$('qbox').innerHTML=`<div class="box ${score/list.length>=.7?'ok':'bad'}"><span class="big">${score} / ${list.length}</span><br>${score===list.length?'Odlično!':'Poglej razlage in ponovi napačne.'}</div><div class="row">${wrong.length?'<button class="btn main" id="rw">Ponovi samo napačne</button>':''}<button class="btn" id="ra">Znova</button></div>`;
+  if(wrong.length)$('rw').onclick=()=>start(wrong);$('ra').onclick=()=>start(list);return}
+ const [q,o,c,e]=list[qi];$('qbox').innerHTML=`<p style="color:var(--mut);margin:0 0 4px">Vprašanje <b>${qi+1} / ${list.length}</b> · točke: ${score}</p><p>${q}</p>`+o.map((t,i)=>`<button class="btn opt" data-i="${i}">${t}</button>`).join('')+'<div id="exp"></div>';
+ $('qbox').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;$('qbox').querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.i===c)x.classList.add('right')});
+  if(i===c)score++;else{b.classList.add('wrong');wrong.push(list[qi])}
+  $('exp').innerHTML=`<div class="box ${i===c?'ok':'bad'}"><b>${i===c?'Pravilno!':'Ni čisto.'}</b> ${e}</div><button class="btn main" id="nx">Naprej</button>`;$('nx').onclick=()=>{qi++;showQ()}})}
+Object.keys(Q).forEach(k=>{const b=document.createElement('button');b.className='btn';b.textContent=k+' ('+Q[k].length+')';b.onclick=()=>{document.querySelectorAll('#topics .btn').forEach(x=>x.classList.toggle('on',x===b));start(Q[k])};$('topics').appendChild(b)});
+document.querySelector('#topics .btn:last-child').click();
+</script>
+</body>
+</html>
