@@ -256,6 +256,7 @@ tr:last-child td,tr:last-child th{border-bottom:0}
 <div class="task"><b>Kaj narediš?</b><ol><li>Najprej ugani: vhodna ali izhodna?</li><li>Klikni kartico. Obrne se in pokaže odgovor.</li></ol></div>
 <div class="iogrid" id="ioBtns"></div>
 <div class="legend"><span class="tag tin">Vhodna</span> <span class="tag tout">Izhodna</span> <span class="tag tboth">Oboje</span> <span class="tag tmem">Pomnilnik</span></div>
+<div class="box bad"><b>Past:</b> <b>optični bralnik</b> je skener, torej <b>vhodna</b> enota – ni optični pomnilnik.</div>
 <h3>Naloga: kam spada naprava?</h3>
 <div class="box ex"><b>Primer: zaslon na dotik</b>
 <ol><li>Ali pošilja podatke v računalnik? <b>Da</b> – pošlje, kje si pritisnil. → vhod</li>
@@ -279,6 +280,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 </div>
 <div class="info" id="vninfo">Klikni na skupino.</div>
 <div class="box bad"><b>Past:</b> <b>matična plošča</b> ne spada v nobeno skupino. Je <b>vezni člen</b>, ki poveže vse enote.</div>
+<div class="box bad"><b>Past:</b> <b>ukazi se izvajajo</b> v <b>CPE</b>, <b>programi so shranjeni</b> v <b>pomnilniku</b>. Dve podobni vprašanji, dva različna odgovora.</div>
 </section>
 
 <section id="program">
@@ -289,6 +291,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <div><h4>⚙️ Izvedljiva koda</h4>Datoteka <b>.exe</b>, .bat …<br>Uporablja jo <b>uporabnik</b>.<br>Razume jo <b>računalnik</b> (binarno).<br><b>Se zažene.</b></div>
 </div>
 <div class="formula">izvorna koda → <span style="color:var(--acc)">prevajalnik</span> → izvedljiv program</div>
+<div class="box bad"><b>Past:</b> izvorna koda <b>ni izvedljiva</b> in <b>ni binarna</b>. Je besedilna datoteka, ki jo bere človek. Pri takem vprašanju je pravilnih <b>več odgovorov</b>.</div>
 <h3>Vrste ukazov</h3>
 <table>
 <tr><th>Vrsta</th><th>Primer</th></tr>
@@ -319,6 +322,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 </table>
 <div class="box ex"><b>Kako dela HDD?</b> Plošče se vrtijo. Nad njimi lebdi <b>bralno-pisalna glava</b>. Podatki so v krogih (<b>sledeh</b>). Glava skoči na sled in počaka, da podatek pride pod njo. Zato je <b>počasnejši</b> od SSD. Je večji (TB) in cenejši.</div>
 <div class="box"><b>Zakaj Ctrl+S?</b> Ko pišeš, je dokument samo v <b>RAM-u</b>. Ctrl+S ga zapiše na <b>disk</b>, da ostane tudi po izklopu.</div>
+<div class="box bad"><b>Past:</b> <b>tračna enota</b> (magnetni trak) je <b>magnetni</b> pomnilnik. <b>BIOS</b> je v <b>ROM-u</b>, ne v RAM-u. <b>Prvi program</b>, ki se naloži v RAM, je <b>operacijski sistem</b>.</div>
 <h3>Naloga: razvrsti pomnilnik</h3>
 <div class="task"><b>Kaj narediš?</b><ol><li>Preberi napravo.</li><li>Izberi vrsto pomnilnika.</li><li>Klikni <b>Naslednja</b>.</li></ol></div>
 <div class="sortcard" id="sortMem"></div>
@@ -414,6 +418,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <div class="scroll" style="margin-top:10px"><table class="tm" id="tmT"></table></div>
 <p style="margin:10px 0 4px">RAM (8 GB):</p><div class="bar" id="tmBar"><i></i></div>
 <div class="box" id="tmInfo"></div>
+<div class="box bad"><b>Past:</b> ko zmanjka RAM-a, se računalnik <b>ne ugasne</b> – začne delati <b>počasneje</b>.</div>
 <div class="box">Tudi ko <b>ni zagnan noben program</b>, se viri porabljajo: <b>OS</b> in <b>procesi v ozadju</b> tudi rabijo CPE in RAM.</div>
 </section>
 
@@ -429,6 +434,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <tr><td><b>Prosta</b> (free)</td><td>Bila je lastniška, potem je postala <b>brezplačna</b> (GPL, CC).</td></tr>
 <tr><td><b>Javna</b> (public)</td><td>Narejena za prosto uporabo, <b>brez lastniške pogodbe</b>.</td></tr>
 </table>
+<div class="box bad"><b>Past:</b> z nakupom lastniškega programa <b>ne postaneš lastnik</b>. Dobiš samo <b>dovoljenje za uporabo</b>.</div>
 <h3>Naloga: katera licenca?</h3>
 <div class="task"><b>Kaj narediš?</b><ol><li>Preberi opis programa.</li><li>Izberi licenco.</li><li>Klikni <b>Naslednja</b>.</li></ol></div>
 <div class="sortcard" id="sortLic"></div>
@@ -525,6 +531,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <h2>Podatkovni tip</h2>
 <p>Iz niza bitov ne vemo, kaj pomeni. To pove <b>podatkovni tip</b>:</p>
 <ol><li><b>vrsta</b> podatka: celo število (15), realno (15,6), predznačeno (+/−), nepredznačeno (samo +), znak ("a"), logična vrednost (true/false), seznam …</li><li><b>dolžina</b> zapisa v bitih</li><li><b>oblika</b> (format) zapisa</li></ol>
+<div class="box bad"><b>Past:</b> niz razreži na kose po dogovorjeni dolžini <b>od leve</b>. Ničle spredaj (0100) so del števila.</div>
 <h3>Isti biti, druga dolžina</h3>
 <div class="task"><b>Kaj narediš?</b><ol><li>Izberi, koliko bitov ima en podatek.</li><li>Poglej, kako se niz razdeli in katera števila dobiš.</li></ol></div>
 <p class="mono" style="word-break:break-all">010011000110010101110000001000</p>
@@ -542,6 +549,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <p><b>I</b> = število bitov, <b>n</b> = število različnih možnosti. Največje število z I biti je <b>2<sup>I</sup> − 1</b> (ker začnemo pri 0).</p>
 <table><tr><th>biti (I)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>7</td><td>8</td><td>10</td></tr><tr><th>možnosti (n)</th><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>128</td><td>256</td><td>1024</td></tr></table>
 <div class="box ex"><b>Naloga 1:</b> 7 bitov. Največje število? → 2<sup>7</sup> = 128 možnosti, od 0 do <b>127</b> (1111111).<br><b>Naloga 2:</b> Slovenska abeceda (25 črk). Koliko bitov? → 2<sup>4</sup> = 16 premalo, 2<sup>5</sup> = 32 dovolj → <b>5 bitov</b>.</div>
+<div class="box bad"><b>Past:</b> število možnosti <b>ni</b> število bitov. 32 možnosti = <b>5 bitov</b> (2^5 = 32), ne 32 bitov.<br><b>Prsti obeh rok</b> = <b>10 bitov</b>, ne 5. <b>8 bitov</b> = 256 možnosti (128 je pri 7 bitih).</div>
 <h3>Naloga: Tomaž in nadstropja</h3>
 <div class="box">Ko izvemo, da Tomaž živi v pritličju, dobimo <b>3 bite</b>. Največ koliko etaž ima zgradba? → 2<sup>3</sup> = <b>8</b> (pritličje je ena od njih).</div>
 <div class="box ok"><b>Kot igra »ugani etažo«:</b> vprašaš »Si v spodnji polovici?«. Vsak odgovor izloči polovico. Pri 8 etažah rabiš <b>3 vprašanja</b>: 8 → 4 → 2 → 1.</div>
@@ -566,6 +574,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <div class="scroll"><table class="mono"><tr><th>bin</th><th>dec</th><th>hex</th><th>bin</th><th>dec</th><th>hex</th></tr>
 <tr><td>0000</td><td>0</td><td>0</td><td>1000</td><td>8</td><td>8</td></tr><tr><td>0001</td><td>1</td><td>1</td><td>1001</td><td>9</td><td>9</td></tr><tr><td>0010</td><td>2</td><td>2</td><td>1010</td><td>10</td><td>A</td></tr><tr><td>0011</td><td>3</td><td>3</td><td>1011</td><td>11</td><td>B</td></tr><tr><td>0100</td><td>4</td><td>4</td><td>1100</td><td>12</td><td>C</td></tr><tr><td>0101</td><td>5</td><td>5</td><td>1101</td><td>13</td><td>D</td></tr><tr><td>0110</td><td>6</td><td>6</td><td>1110</td><td>14</td><td>E</td></tr><tr><td>0111</td><td>7</td><td>7</td><td>1111</td><td>15</td><td>F</td></tr></table></div>
 <div class="box ex"><b>bin → hex:</b> razdeli na skupine po 4 bite <b>z desne</b>. Spredaj dodaj ničle. 110010 → <b>0011 0010</b> → <b>32</b>.<br><b>hex → dec:</b> B4 = 11·16 + 4·1 = <b>180</b>.</div>
+<div class="box bad"><b>Past:</b> vsaka hex števka je <b>točno 4 biti</b>, tudi z ničlami spredaj (1 = <b>0001</b>, ne 1). Tudi »123« je lahko <b>hex</b> zapis – ni desetiško število.</div>
 <h3>Vaja: bin → hex</h3>
 <div class="task"><b>Kaj narediš?</b><ol><li>Pod vsako skupino 4 bitov vpiši hex znak (mala črka tudi velja).</li><li>Pomagaj si z utežmi 8 4 2 1.</li><li>Klikni <b>Preveri</b>.</li></ol></div>
 <div id="tB2H"></div>
@@ -583,11 +592,13 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <div class="scroll"><table class="mono" id="cebT"></table></div>
 <div class="task"><b>Kaj narediš?</b><ol><li>Niz razdeli na skupine po <b>4 bite</b> (že narejeno).</li><li>Vsako skupino poišči v tabeli zgoraj.</li><li>Vpiši črko in klikni <b>Preveri</b>.</li></ol></div>
 <div id="tCeb"></div>
+<div class="box bad"><b>Past:</b> v kvizu je lahko <b>druga kodna tabela</b> kot na prosojnici (npr. a = 0000 … p = 1111). Vedno uporabi tabelo <b>iz naloge</b>.</div>
 <p>S 4 biti zapišeš le 2<sup>4</sup> = <b>16 znakov</b> – premalo za celo abecedo.</p>
 <h3>Koliko bitov za en znak?</h3>
 <div class="task"><b>Kaj narediš?</b><ol><li>Obkljukaj, kaj mora biti v tabeli.</li><li>Poglej, koliko bitov rabiš (2^I ≥ n, n = število znakov).</li></ol></div>
 <div class="chk" id="chk"></div>
 <div class="box" id="chkres"></div>
+<div class="box bad"><b>Past:</b> preštej <b>vse</b> skupine znakov (male + velike + števke + operatorji + ločila) in šele potem išči 2^I.</div>
 <h3>ASCII</h3>
 <ul>
 <li>Standard za zapis besedila. Na začetku <b>7 b</b>, danes <b>8 b</b> na znak → 2<sup>8</sup> = <b>256 znakov</b>.</li>
@@ -597,6 +608,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 </ul>
 <table class="mono"><tr><th>prvi 4 biti</th><th style="font-family:system-ui">pomen</th></tr><tr><td>0011</td><td style="font-family:system-ui">števke 0–9 (0011 0000 = »0«)</td></tr><tr><td>0100</td><td style="font-family:system-ui">velike A–O (0001 = A)</td></tr><tr><td>0101</td><td style="font-family:system-ui">velike P–Z (0000 = P)</td></tr><tr><td>0110</td><td style="font-family:system-ui">male a–o (0001 = a)</td></tr><tr><td>0111</td><td style="font-family:system-ui">male p–z (0000 = p)</td></tr></table>
 <div class="box ex"><b>Primer:</b> »B« je v hex tabeli v vrstici 4, stolpcu 2 → <b>42</b> hex → 0100 0010.<br><b>Šola</b> (ISO 8859-2) = A9 6F 6C 61 = 10101001 01101111 01101100 01100001.</div>
+<div class="box bad"><b>Past:</b> pazi na <b>veliko in malo črko</b>: 0100/0101 = velika, 0110/0111 = mala. V razširjeni tabeli je <b>prva hex števka stolpec</b>, <b>druga vrstica</b> – ne zamenjaj ju.</div>
 <h3>Naloga: prekodiraj ASCII</h3>
 <div class="task"><b>Kaj narediš?</b><ol><li>Prvi 4 biti: velika ali mala črka.</li><li>Zadnji 4 biti: katera po vrsti v <b>angleški</b> abecedi (0001 = 1. črka).</li><li>Če so prvi biti 0101 ali 0111, prištej 16 (0000 = P).</li><li>Vpiši črko in klikni <b>Preveri</b>.</li></ol></div>
 <div id="tAscii"></div>
@@ -640,6 +652,7 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <div><h4>🟦 Rastrska (bitna) slika</h4>Mreža <b>pikslov</b>. Vsak piksel ima barvo.<br>Kakovost odvisna od <b>ločljivosti</b> in <b>barvne globine</b>.<br>Velika datoteka. Pri povečavi je <b>kockasta</b>.<br>Primer: fotografije (BMP, JPG, PNG, GIF).</div>
 <div><h4>📐 Vektorska (predmetna) slika</h4><b>Geometrijski zapis</b> (črte, krogi, krivulje).<br>Kakovost <b>neodvisna</b> od ločljivosti.<br>Majhna datoteka. Pri povečavi ostane <b>ostra</b>.<br>Primer: logotipi, pisave, CGI (SVG, AI, EPS).</div>
 </div>
+<div class="box bad"><b>Past:</b> <b>osnovni gradnik</b> bitne slike je <b>pika (piksel)</b>, ne bit. Kakovost rastrske slike je <b>odvisna</b> od ločljivosti in barvne globine. »Geometrijski zapis« in »neodvisna od velikosti« velja za <b>vektorsko</b>.</div>
 <h3>Povečaj sliko</h3>
 <div class="task"><b>Kaj narediš?</b><ol><li>Premakni drsnik za povečavo.</li><li>Primerjaj rastrsko (levo) in vektorsko (desno) sliko.</li></ol></div>
 <label class="sl">Povečava <input type="range" min="1" max="8" value="1" id="zoomR"><span id="zoomV">1×</span></label>
@@ -657,10 +670,12 @@ Kot <b>okence v trgovini</b>: daš denar noter (vhod), dobiš kruh ven (izhod).<
 <div class="pixwrap"><div class="pix" id="pixG"></div><div class="box mono" id="pixQ" style="margin:0"></div></div>
 <div class="row" style="margin-top:10px"><button class="btn main" id="pixC">Preveri</button><button class="btn" id="pixN">Nova slika</button><button class="btn" id="pixS">Pokaži rešitev</button></div>
 <div id="pixR"></div>
+<div class="box bad"><b>Past:</b> če število barv ni 2, 4, 8 …, zaokroži <b>navzgor</b>: 5 barv → <b>3 biti</b> (2^2 = 4 je premalo). Ločljivost piši kot <b>širina x višina</b>.</div>
 <div class="box ex"><b>Če so 4 barve</b> (modra, zelena, rdeča, rjava): n = 4 → <b>2 bita</b> na piko. Kodna tabela: modra 00, zelena 01, rdeča 10, rjava 11.</div>
 <h3>Velikost slike</h3>
 <div class="formula">širina × višina × barvna globina = biti</div>
 <div class="box ex"><b>1920 × 1080, RGB (24 b):</b><br>1920 · 1080 · 24 ÷ 8 = 6 220 800 B<br>÷ 1024 = 6075 KiB<br>÷ 1024 = <b>5,9 MiB</b><br><br><b>3472 × 4640, RGB:</b> 48 330 240 B ≈ 47 197 KiB ≈ <b>46,1 MiB</b></div>
+<div class="box bad"><b>Past:</b> pri MiB deli <b>dvakrat s 1024</b>, ne s 1000. Ponujeni odgovori so si zelo blizu.</div>
 <div class="task"><b>Kaj narediš?</b><ol><li>Ugotovi bite na piko.</li><li>Izračunaj: pike × biti ÷ 8 ÷ 1024.</li><li>Vpiši v KiB (zaokroži na celo) in klikni <b>Preveri</b>.</li></ol></div>
 <div id="tImg"></div>
 </section>
@@ -757,7 +772,7 @@ const pn={mb:'Matična plošča',cpu:'CPE',ram:'RAM',rom:'ROM',gpu:'Grafična',p
 Object.keys(parts).forEach(k=>{const b=document.createElement('button');b.className='btn';b.dataset.p=k;b.textContent=pn[k];b.onclick=()=>showPart(k);$('pcbtns').appendChild(b)});
 const G={in:['Vhodna','tin'],out:['Izhodna','tout'],both:['Oboje','tboth'],mem:['Pomnilnik','tmem']};
 [['⌨️','Tipkovnica','in'],['🖱️','Miška','in'],['🎤','Mikrofon','in'],['📷','Kamera','in'],['🖥️','Zaslon','out'],['🖨️','Tiskalnik','out'],['🔊','Zvočniki','out'],['💾','USB ključ','mem']].forEach(([e,n,g])=>{const c=document.createElement('button');c.className='ioc';c.innerHTML=`<div class="in"><div class="f"><span>${e}</span>${n}</div><div class="b ${G[g][1]}">${e} ${n}<br>${G[g][0]}</div></div>`;c.onclick=()=>c.classList.toggle('flip');$('ioBtns').appendChild(c)});
-sorter('sortIO',{in:'Vhodna',out:'Izhodna',both:'Oboje',mem:'Pomnilnik'},[['🧾','Skener','in','Sliko papirja pošlje v računalnik.'],['📽️','Projektor','out','Sliko iz računalnika pokaže na steni.'],['🎧','Slušalke z mikrofonom','both','Slušalke = izhod, mikrofon = vhod.'],['📱','Zaslon na dotik','both','Dotik gre noter, slika pride ven.'],['🕹️','Igralna palica','in','Tvoje premike pošlje v računalnik.'],['💿','Zunanji disk','mem','Trajno hrani podatke.'],['🖨️','3D tiskalnik','out','Iz podatkov naredi predmet.'],['✍️','Grafična tablica','in','Potezo pisala pošlje v računalnik.'],['🏷️','Čitalec črtne kode','in','Prebere kodo in jo pošlje v računalnik.']]);
+sorter('sortIO',{in:'Vhodna',out:'Izhodna',both:'Oboje',mem:'Pomnilnik'},[['🧾','Skener','in','Sliko papirja pošlje v računalnik.'],['📽️','Projektor','out','Sliko iz računalnika pokaže na steni.'],['🎧','Slušalke z mikrofonom','both','Slušalke = izhod, mikrofon = vhod.'],['📱','Zaslon na dotik','both','Dotik gre noter, slika pride ven.'],['🕹️','Igralna palica','in','Tvoje premike pošlje v računalnik.'],['💿','Zunanji disk','mem','Trajno hrani podatke.'],['🖨️','3D tiskalnik','out','Iz podatkov naredi predmet.'],['✍️','Grafična tablica','in','Potezo pisala pošlje v računalnik.'],['🏷️','Čitalec črtne kode','in','Prebere kodo in jo pošlje v računalnik.'],['📠','Optični bralnik','in','To je skener – vhodna enota.']]);
 
 /* VN */
 const vn={in:['Vhodne enote','Podatke preberejo in jih pretvorijo v binarni zapis.','tipkovnica, miška, mikrofon, skener'],cpu:['CPE','Obdeluje podatke in izvaja ukaze, enega za drugim.','procesor'],out:['Izhodne enote','Binarni zapis pretvorijo v obliko za človeka.','zaslon, tiskalnik, zvočniki, projektor'],mem:['Pomnilnik','Shranjuje <b>podatke in programe</b> skupaj (načelo shranjenega programa).','RAM, ROM, disk']};
@@ -765,7 +780,7 @@ document.querySelectorAll('.vn div').forEach(d=>d.onclick=()=>{const v=vn[d.data
 
 /* program sorters */
 sorter('sortUkaz',{a:'Aritmetični',p:'Primerjalni / logični',v:'Vhodni',i:'Izhodni',o:'Ostali'},[['➕','Seštej dve števili','a','Računanje = aritmetični ukaz.'],['✖️','Zmnoži 6 in 7','a','Računanje = aritmetični ukaz.'],['⚖️','Ali je a večje od b?','p','Primerjava dveh vrednosti.'],['🔗','Logični IN','p','Logična operacija.'],['⌨️','Preberi podatek s tipkovnice','v','Podatek pride v računalnik.'],['🖥️','Izpiši rezultat na zaslon','i','Podatek gre iz računalnika.'],['📦','Shrani podatek v pomnilnik','o','Shranjevanje spada med ostale ukaze.'],['🔀','Premakni podatek','o','Premikanje spada med ostale ukaze.'],['🟰','Ali je x enako 0?','p','Primerjava (enako / različno).']]);
-sorter('sortMem',{ram:'Glavni (RAM)',rom:'Bralni (ROM)',fl:'Bliskovni',mag:'Magnetni',opt:'Optični'},[['💿','DVD','opt','Optični nosilec – bere ga laser.'],['📀','Blu-ray','opt','Optični nosilec.'],['🔵','CD-ROM','opt','Optični nosilec.'],['🔑','USB ključ','fl','Bliskovni (flash) pomnilnik.'],['🗂️','SD kartica','fl','Bliskovni pomnilnik.'],['⚡','Disk SSD','fl','Bliskovni pomnilnik, brez vrtečih delov.'],['🌀','Trdi disk HDD','mag','Magnetne plošče, ki se vrtijo.'],['📼','Magnetni trak','mag','Magnetni medij.'],['🧠','Pomnilnik z zagnanimi programi','ram','To je RAM – začasen in hiter.'],['🔒','Čip z BIOS-om','rom','BIOS je v ROM-u.']]);
+sorter('sortMem',{ram:'Glavni (RAM)',rom:'Bralni (ROM)',fl:'Bliskovni',mag:'Magnetni',opt:'Optični'},[['💿','DVD','opt','Optični nosilec – bere ga laser.'],['📀','Blu-ray','opt','Optični nosilec.'],['🔵','CD-ROM','opt','Optični nosilec.'],['🔑','USB ključ','fl','Bliskovni (flash) pomnilnik.'],['🗂️','SD kartica','fl','Bliskovni pomnilnik.'],['⚡','Disk SSD','fl','Bliskovni pomnilnik, brez vrtečih delov.'],['🌀','Trdi disk HDD','mag','Magnetne plošče, ki se vrtijo.'],['📼','Tračna enota','mag','Magnetni trak – magnetni medij.'],['🧠','Pomnilnik z zagnanimi programi','ram','To je RAM – začasen in hiter.'],['🔒','Čip z BIOS-om','rom','BIOS je v ROM-u.']]);
 
 /* CPE parts */
 const cpeP={'Krmilna enota':'<b>Najpomembnejši del.</b> Bere ukaz za ukazom iz pomnilnika, ga <b>dekodira</b> in krmili izvajanje. Skrbi za pretok podatkov po vodilih.','Aritmetično-logična enota (ALE)':'<b>Računa</b>: aritmetične, logične in primerjalne operacije nad podatki.','Registri':'Majhen, zelo hiter pomnilnik <b>v procesorju</b>. Začasno hrani podatke in naslove (npr. R0, PC).'};
